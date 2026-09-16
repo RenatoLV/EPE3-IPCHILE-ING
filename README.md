@@ -97,6 +97,14 @@ La interfaz presenta cuatro rutas referenciales para contextualizar el caso en C
 
 La cifra muestra ± RMSE de test como referencia de error típico aproximado. **No es un intervalo de confianza.** La recomendación compara la predicción con el promedio de los últimos 21 registros sintéticos de la ruta. El gráfico muestra esos registros de 2024 y un punto de escenario elegido por el usuario, que puede pertenecer a otra fecha y no es una continuación temporal del historial.
 
+## Entregables de la EPE 3
+
+- [Informe editable en Word](entregables/Maqueta_Informe_EPE3.docx)
+- [Informe en PDF](entregables/Maqueta_Informe_EPE3.pdf)
+- [Presentación ejecutiva en PowerPoint](entregables/Presentacion_EPE3.pptx)
+
+Los tres archivos están versionados en GitHub junto al código. Antes de la entrega académica, completa los datos de portada, confirma la continuidad con EPE 2 y agrega resultados de usabilidad obtenidos con personas reales; consulta [CHECKLIST_ENTREGA_FINAL.md](CHECKLIST_ENTREGA_FINAL.md).
+
 ## GitHub y entrega
 
 Repositorio: https://github.com/RenatoLV/EPE3-IPCHILE-ING. Para seguir trabajando desde otro equipo:
