@@ -15,6 +15,12 @@ def client():
 def test_health(client):
     assert client.get('/health').status_code == 200
 
+def test_docs_work_without_external_assets(client):
+    response = client.get('/docs')
+    assert response.status_code == 200
+    assert 'POST /predict' in response.text
+    assert 'cdn.' not in response.text
+
 def test_prediction(client):
     r = client.post('/predict',json=PAYLOAD)
     assert r.status_code == 200
@@ -59,10 +65,30 @@ def test_form_date_is_translated_for_the_api(client, monkeypatch):
     assert b'S\xc3\xa1bado 19 de septiembre de 2026' in response.data
 
 
-def test_web_health():
+def test_web_health(monkeypatch):
+    monkeypatch.setattr(httpx, 'get', lambda url, timeout: type('Response', (), {'status_code': 200, 'json': lambda self: {'status': 'ok'}})())
     response = web.test_client().get('/health')
     assert response.status_code == 200
-    assert response.get_json()['servicio'] == 'web'
+    assert response.get_json() == {'servicio': 'web', 'api': 'ok'}
+
+
+def test_web_health_when_api_is_down(monkeypatch):
+    def fail(*args, **kwargs):
+        raise httpx.ConnectError('offline')
+    monkeypatch.setattr(httpx, 'get', fail)
+    response = web.test_client().get('/health')
+    assert response.status_code == 503
+    assert response.get_json() == {'servicio': 'web', 'api': 'caida'}
+
+
+def test_interface_explains_model_and_error(client, monkeypatch):
+    monkeypatch.setattr(httpx, 'post', lambda url, json, timeout: client.post('/predict', json=json))
+    response = web.test_client().post('/', data=PAYLOAD)
+    assert response.status_code == 200
+    assert 'Acerca del modelo'.encode() in response.data
+    assert 'RMSE medido en test'.encode() in response.data
+    assert 'Últimos 21 días'.encode() in response.data
+    assert '±'.encode() in response.data
 
 def test_web_api_integration(client,monkeypatch):
     monkeypatch.setattr(httpx,'post',lambda url,json,timeout:client.post('/predict',json=json))

@@ -212,6 +212,49 @@
     "RMSE": 8.067377420059492,
     "R2": 0.8416527145017636
   },
+  "efectos_modelo": [
+    {
+      "variable": "remainder__promocion",
+      "coeficiente": 22.139788447153318
+    },
+    {
+      "variable": "categorias__zona_1",
+      "coeficiente": -18.514034932453303
+    },
+    {
+      "variable": "categorias__zona_4",
+      "coeficiente": 18.07477119649787
+    },
+    {
+      "variable": "categorias__mes_9",
+      "coeficiente": -13.089920992349038
+    },
+    {
+      "variable": "categorias__dia_semana_6",
+      "coeficiente": 12.957263148280227
+    },
+    {
+      "variable": "categorias__dia_semana_5",
+      "coeficiente": 12.749910487741372
+    },
+    {
+      "variable": "categorias__mes_3",
+      "coeficiente": 12.155733541654905
+    },
+    {
+      "variable": "categorias__mes_10",
+      "coeficiente": -10.94522694719999
+    },
+    {
+      "variable": "categorias__mes_8",
+      "coeficiente": -10.542223812855726
+    },
+    {
+      "variable": "categorias__mes_4",
+      "coeficiente": 10.504864553854356
+    }
+  ],
+  "interpretacion_efectos": "Coeficientes del modelo lineal; describen asociación condicional, no causalidad. Categorías one-hot y escalas distintas limitan comparaciones directas.",
   "baseline_lag7_test": {
     "MAE": 13.701481476061982,
     "RMSE": 17.508134898456376,

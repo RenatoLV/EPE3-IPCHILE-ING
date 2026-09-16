@@ -75,40 +75,42 @@ $body = @{zona=1;dia_semana=5;mes=12;promocion=1;demanda_lag7=95.0} | ConvertTo-
 Invoke-RestMethod http://127.0.0.1:8000/predict -Method Post -ContentType 'application/json' -Body $body
 ```
 
-`GET /health` devuelve 200 si el modelo está cargado, 503 si falta. No cargues archivos pickle de procedencia desconocida.
+`GET /health` en FastAPI devuelve 200 si el modelo está cargado, 503 si falta. `GET /health` en Flask consulta a FastAPI con un timeout de un segundo y devuelve `{"servicio":"web","api":"ok"}` o `{"servicio":"web","api":"caida"}` con estado 503. `/docs` funciona sin internet e incluye una prueba interactiva; `/openapi.json` entrega el esquema generado por FastAPI. Cada `POST /predict` válido se registra como JSON en stdout del servicio API. No cargues archivos pickle de procedencia desconocida.
 
 ## Archivos
 
 - `train_model.py`: genera 2 años sintéticos en 4 zonas, compara regresión lineal y 4 configuraciones Random Forest. Divide por fechas completas, usa 5 ventanas temporales sobre el primer 80% y reserva el último 20% para test. Selecciona por MAE de validación.
-- `api.py`: API FastAPI y validación Pydantic.
-- `app.py`, `templates/index.html`: interfaz Flask accesible y adaptable a móviles.
+- `api.py`, `templates/api_docs.html`: API FastAPI, validación Pydantic y documentación interactiva autónoma.
+- `app.py`, `templates/index.html`: interfaz Flask adaptable a móviles, historial sintético y métricas visibles. El gráfico usa Chart.js por CDN cuando está disponible y un SVG local cuando no hay acceso a internet.
 - `test_app.py`: pruebas de entradas, integración, disponibilidad y separación temporal.
 - `benchmark.py`: 100 solicitudes con concurrencia 10 a cada servicio local.
 - `run.py`, `iniciar.ps1`, `instalar.ps1`: preparación, arranque supervisado y verificación real del flujo HTTP.
 - `data/`: conjunto sintético reproducible, semilla 42.
 - `artifacts/`: métricas, predicciones por fila, pruebas, medición de carga y evidencias.
 - `entregables/`: maqueta del informe en Word/PDF y presentación editable.
-- `PLAN_DE_TRABAJO.md`: rúbrica, pendientes y protocolo de usabilidad.
+- `PROTOCOLO_USABILIDAD.md`: tarea de 5 minutos y tabla vacía para 3–5 participantes reales.
+- `CHECKLIST_ENTREGA_FINAL.md`: portada, capturas, EPE 2, GitHub y ensayo desde otro equipo.
 
 Los rezagos del test usan observaciones reales del pasado simulado. El protocolo representa una predicción diaria con datos disponibles, no un pronóstico de varios meses emitido de una sola vez. El generador es aditivo y puede favorecer modelos simples. MAE y RMSE corresponden a regresión; Precision, Recall y F1 no aplican al objetivo continuo.
 
 La interfaz presenta cuatro rutas referenciales para contextualizar el caso en Coquimbo: Centro y Guayacán, Peñuelas y La Herradura, Tierras Blancas, y Parte Alta y San Juan. El calendario deriva día de semana y mes para la API. Estas rutas no representan una división comercial real ni datos reales de demanda; deben reemplazarse o validarse antes de utilizar registros empresariales.
 
+La cifra muestra ± RMSE de test como referencia de error típico aproximado. **No es un intervalo de confianza.** La recomendación compara la predicción con el promedio de los últimos 21 registros sintéticos de la ruta. El gráfico muestra esos registros de 2024 y un punto de escenario elegido por el usuario, que puede pertenecer a otra fecha y no es una continuación temporal del historial.
+
 ## GitHub y entrega
 
-Repositorio preparado localmente; **no publicado**. Crea un repositorio vacío en tu cuenta y luego ejecuta (reemplazando TU_USUARIO):
+Repositorio: https://github.com/RenatoLV/EPE3-IPCHILE-ING. Para seguir trabajando desde otro equipo:
 
 ```powershell
-git add .
-git commit -m "Prototipo NexaFlow EPE 3"
-git branch -M main
-git remote add origin https://github.com/TU_USUARIO/nexaflow-demanda-ml.git
-git push -u origin main
+git clone https://github.com/RenatoLV/EPE3-IPCHILE-ING.git
+cd EPE3-IPCHILE-ING
+docker compose up --build -d --wait
+docker compose ps
 ```
 
-Si ya tienes un remoto, revísalo con `git remote -v` antes de añadirlo. Copia el enlace real al informe y a la presentación. Verifica la instalación desde un clon limpio. Completa los campos pendientes y reemplaza la condición de maqueta cuando termines. Docker y despliegue cloud son opcionales.
+El contenedor se reconstruye desde el Dockerfile y los archivos del repositorio. Iniciar sesión en Docker Desktop no traslada automáticamente los contenedores del otro equipo. Antes de entregar, confirma acceso del docente al enlace, completa los datos personales y aplica las pruebas de usabilidad; los resultados de estas pruebas deben ser reales.
 
-## Docker opcional
+## Docker
 
 Si Docker Desktop está instalado y en ejecución, este proyecto puede levantarse sin crear un entorno Python local:
 

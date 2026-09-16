@@ -3,9 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>NexaFlow | Planificación de demanda</title>
+  <title>NexaFlow | Estimación de demanda para rutas de Coquimbo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230d3045'/%3E%3Ctext x='32' y='44' font-size='39' text-anchor='middle' fill='white' font-family='Arial'%3EN%3C/text%3E%3C/svg%3E">
   <style>
     :root{--ink:#15364b;--navy:#0d3045;--teal:#007c78;--teal-soft:#e5f4f2;--paper:#fff;--canvas:#f3f7f8;--muted:#557080;--line:#d8e3e7;--alert:#9b3b20}*{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--ink);font-family:Calibri,Arial,sans-serif;font-size:17px;line-height:1.5}.topbar{background:var(--navy);color:#fff;padding:17px max(5vw,28px);display:flex;justify-content:space-between;align-items:center;gap:20px}.brand{font-size:27px;font-weight:700}.brand small{display:block;color:#b9d8df;font-size:13px;font-weight:400}.tag{border:1px solid #5c8798;border-radius:99px;padding:6px 13px;font-size:13px;white-space:nowrap}main{max-width:1190px;margin:auto;padding:44px 28px 54px}.eyebrow{color:var(--teal);font-size:14px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin:0 0 8px}h1{font-size:43px;line-height:1.08;max-width:760px;letter-spacing:-1px;margin:0 0 14px}.lead{font-size:20px;color:var(--muted);max-width:800px;margin:0}.purpose{margin-top:27px;background:var(--teal-soft);border-left:5px solid var(--teal);padding:16px 20px;max-width:950px}.purpose strong{display:block;margin-bottom:3px}.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:36px 0 27px}.step{background:var(--paper);border:1px solid var(--line);padding:18px 19px;min-height:132px;border-radius:11px}.step-num{color:var(--teal);font-weight:700;font-size:14px}.step h2{font-size:20px;margin:7px 0 4px}.step p{font-size:15px;color:var(--muted);margin:0}.workspace{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(310px,.9fr);gap:26px;align-items:start}.panel{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:29px;box-shadow:0 3px 9px #1733450a}.panel h2{font-size:25px;margin:0 0 4px}.panel-head{color:var(--muted);font-size:15px;margin:0 0 22px}label{display:block;font-size:15px;font-weight:700;margin:19px 0 7px}.help{font-weight:400;color:var(--muted);font-size:13px;display:block;margin-top:2px}input,select,button{font:inherit}input,select{background:#fff;border:1px solid #a9bdc5;border-radius:7px;color:var(--ink);width:100%;padding:12px 13px}input:focus,select:focus,button:focus{outline:3px solid #f6d27e;outline-offset:2px}.zone-note{background:#f6fafb;border:1px solid var(--line);border-radius:8px;padding:13px 15px;margin-top:10px;font-size:14px}.zone-note strong{display:block}.zone-note span{color:var(--muted)}.date-summary{font-size:14px;color:var(--teal);font-weight:700;margin:6px 0 0}.switch{display:grid;grid-template-columns:1fr 1fr;border:1px solid #a9bdc5;border-radius:7px;overflow:hidden}.switch label{cursor:pointer;font-weight:400;margin:0;padding:12px;text-align:center;border-right:1px solid #a9bdc5}.switch label:last-child{border:0}.switch input{accent-color:var(--teal);width:auto;margin-right:7px}.button{margin-top:26px;width:100%;background:var(--teal);color:#fff;border:0;border-radius:7px;padding:14px;font-weight:700;cursor:pointer}.button:hover{background:#006966}.output{border-top:5px solid var(--teal)}.status{display:inline-block;background:#eaf6ed;color:#26623d;padding:4px 10px;border-radius:99px;font-size:13px;font-weight:700;margin:15px 0}.status.initial{background:#eff3f5;color:var(--muted)}.result-value{font-size:58px;line-height:1;color:var(--teal);font-weight:700;letter-spacing:-2px;margin:12px 0 4px}.result-unit{font-size:17px;margin:0 0 25px}.decision{background:#fff8e8;border:1px solid #f4d787;border-radius:8px;padding:15px}.decision h3{font-size:16px;margin:0 0 5px}.decision p{font-size:15px;margin:0;color:#5d4b23}.context-list{padding:0;margin:22px 0;list-style:none}.context-list li{padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}.context-list b{display:block}.context-list span{color:var(--muted)}.alert{background:#fff0eb;border-radius:8px;color:var(--alert);padding:14px}footer{max-width:1190px;margin:auto;padding:0 28px 32px;color:var(--muted);font-size:13px}@media(max-width:780px){main{padding:30px 18px}.topbar{padding:15px 18px}.tag{display:none}h1{font-size:35px}.flow,.workspace{grid-template-columns:1fr}.panel{padding:23px}.flow{gap:11px}.step{min-height:auto}}
+    .model-card,.history-card{max-width:1190px;margin:24px auto 0;background:#fff;border:1px solid var(--line);border-radius:13px;padding:25px}.model-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:18px 0}.metric{border-left:3px solid var(--teal);padding-left:12px}.metric b{display:block;font-size:23px}.metric span{font-size:14px;color:#425d6b}.uncertainty{font-size:19px;font-weight:700;margin:0 0 7px}.caveat{font-size:14px;color:#425d6b;margin:0 0 18px}.success-mark{color:#17663d}.error-panel{border-top:5px solid #9b3b20}.alert{border:1px solid #ba6048}.loading{display:none;margin:12px 0 0;color:#005e5b;font-weight:700}.loading.active{display:flex;align-items:center;gap:10px}.spinner{width:18px;height:18px;border:3px solid #b2d9d6;border-top-color:#005e5b;border-radius:50%;animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.history-chart{position:relative;height:310px;max-width:100%}.history-caption{font-size:14px;color:#425d6b}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}fieldset{border:0;padding:0;margin:18px 0 0}legend{font-size:15px;font-weight:700;margin-bottom:7px}.switch label{display:flex;align-items:center;justify-content:center}.model-note{font-size:14px;color:#425d6b}@media(max-width:780px){.model-grid{grid-template-columns:repeat(2,1fr)}.model-card,.history-card{margin:18px 18px 0;padding:20px}.history-chart{height:260px}}@media(max-width:440px){body{font-size:16px}.topbar .brand{font-size:23px}h1{font-size:32px}.result-value{font-size:48px}.model-grid{gap:12px}.metric b{font-size:19px}.panel{padding:19px}}@media(prefers-reduced-motion:reduce){.spinner{animation:none}}
   </style>
 </head>
 <body>
@@ -21,7 +23,7 @@
       <article class="step"><div class="step-num">03 · APOYO A DECISIÓN</div><h2>Revisa la estimación</h2><p>Compara las unidades estimadas con stock, pedidos pendientes y capacidad de despacho.</p></article>
     </section>
     <div class="workspace">
-      <form class="panel" method="post">
+      <form class="panel" method="post" id="prediction-form">
         <h2>Preparar una estimación</h2><p class="panel-head">Completa los datos que se conocen antes de organizar la ruta.</p>
         <label for="zona">Ruta de reparto referencial</label>
         <select id="zona" name="zona" aria-describedby="zona-ayuda">
@@ -31,28 +33,83 @@
         <label for="fecha">Fecha que se desea planificar <span class="help">El calendario calcula automáticamente el día de semana y el mes.</span></label>
         <input id="fecha" name="fecha" type="date" value="{{ values.fecha }}" required>
         <p class="date-summary" id="date-summary">{{ fecha_humana }}</p>
-        <label>¿Habrá promoción activa?</label>
-        <div class="switch"><label><input type="radio" name="promocion" value="0" {% if values.promocion|string == '0' %}checked{% endif %}>No</label><label><input type="radio" name="promocion" value="1" {% if values.promocion|string != '0' %}checked{% endif %}>Sí</label></div>
+        <fieldset><legend>¿Habrá promoción activa?</legend><div class="switch"><label for="promo-no"><input id="promo-no" type="radio" name="promocion" value="0" {% if values.promocion|string == '0' %}checked{% endif %}>No</label><label for="promo-si"><input id="promo-si" type="radio" name="promocion" value="1" {% if values.promocion|string != '0' %}checked{% endif %}>Sí</label></div></fieldset>
         <label for="demanda_lag7">Demanda observada hace 7 días <span class="help">Usa las unidades reales de la misma ruta, para el mismo día de la semana anterior.</span></label>
         <input id="demanda_lag7" name="demanda_lag7" type="number" min="0" max="100000" step="0.1" value="{{ values.demanda_lag7 }}" required>
-        <button class="button" type="submit">Estimar demanda de la ruta</button>
+        <button class="button" type="submit" id="submit-button">Estimar demanda de la ruta</button>
+        <p class="loading" id="loading-status" role="status" aria-live="polite"><span class="spinner" aria-hidden="true"></span>Consultando el modelo, espera un momento…</p>
       </form>
-      <aside class="panel output" aria-live="polite">
+      <aside class="panel output {% if error %}error-panel{% endif %}" aria-live="polite" aria-atomic="true">
         <h2>Resultado para la ruta</h2>
-        {% if error %}<p class="alert" role="alert">{{ error }}</p>
-        {% elif result %}<span class="status">Estimación calculada</span><p class="result-value">{{ result.prediccion_demanda }}</p><p class="result-unit">unidades estimadas para {{ fecha_humana|lower }}</p><div class="decision"><h3>Siguiente revisión recomendada</h3><p>Contrasta esta cantidad con el inventario disponible, pedidos confirmados y capacidad de la ruta antes de tomar una decisión.</p></div>
+        {% if error %}<p class="alert" role="alert">⚠ {{ error }}</p>
+        {% elif result %}<span class="status"><span class="success-mark" aria-hidden="true">✓</span> Estimación calculada</span><p class="result-value">{{ result.prediccion_demanda }}</p><p class="result-unit">unidades estimadas para {{ fecha_humana|lower }}</p>{% if rmse is not none %}<p class="uncertainty">{{ result.prediccion_demanda }} ± {{ rmse }} unidades</p><p class="caveat">Referencia: RMSE medido en test. Es un error típico aproximado, no un intervalo de confianza ni una garantía para esta ruta.</p>{% endif %}<div class="decision"><h3>Siguiente revisión recomendada</h3><p>{{ recommendation or 'Contrasta esta cantidad con inventario, pedidos y capacidad de la ruta.' }}</p>{% if average is not none %}<p style="margin-top:8px">Promedio de los últimos 21 días sintéticos registrados para esta ruta: {{ average }} unidades.</p>{% endif %}</div>
         {% else %}<span class="status initial">Pendiente de cálculo</span><p class="result-unit">Completa el formulario para obtener la cantidad estimada de unidades.</p>{% endif %}
         <ul class="context-list"><li><b>Ruta seleccionada</b><span>{{ zona_seleccionada.nombre }}</span></li><li><b>Sector referencial</b><span>{{ zona_seleccionada.sectores }}</span></li><li><b>Uso responsable</b><span>La predicción apoya una decisión humana y debe validarse con registros reales.</span></li></ul>
         <div class="decision"><h3>Sobre este ejemplo</h3><p>Las rutas son referenciales para contextualizar Coquimbo. El modelo fue entrenado con datos sintéticos y no representa la demanda real de los sectores nombrados.</p></div>
       </aside>
     </div>
+    <section class="history-card" aria-labelledby="history-title">
+      <h2 id="history-title">Demanda histórica de la ruta {{ values.zona if values.zona|string in ['1','2','3','4'] else '1' }}</h2>
+      <p class="history-caption">Últimos 21 días de la muestra sintética de 2024. El punto final es un escenario estimado para {{ fecha_humana|lower }}; las fechas no son consecutivas.</p>
+      <div class="history-chart"><canvas id="history-chart" role="img" aria-label="Gráfico de demanda histórica sintética y escenario estimado"></canvas></div>
+      <p id="chart-fallback" class="history-caption">{% if history %}La demanda histórica reciente va de {{ history|map(attribute='demanda')|min }} a {{ history|map(attribute='demanda')|max }} unidades. {% endif %}{% if result %}Escenario estimado: {{ result.prediccion_demanda }} unidades.{% endif %}</p>
+    </section>
+    <section class="model-card" aria-labelledby="model-title">
+      <h2 id="model-title">Acerca del modelo</h2>
+      {% if metrics %}<p>Modelo seleccionado: <strong>{{ metrics.seleccionado }}</strong>. Entrenamiento con registros anteriores al <strong>{{ metrics.test_desde }}</strong>; prueba temporal desde esa fecha.</p>
+      <div class="model-grid"><div class="metric"><span>MAE de test</span><b>{{ '%.2f'|format(metrics.test_metricas.MAE) }}</b><span>unidades</span></div><div class="metric"><span>RMSE de test</span><b>{{ '%.2f'|format(metrics.test_metricas.RMSE) }}</b><span>unidades</span></div><div class="metric"><span>R² de test</span><b>{{ '%.3f'|format(metrics.test_metricas.R2) }}</b><span>proporción explicada</span></div><div class="metric"><span>Filas de test</span><b>{{ metrics.test }}</b><span>registros</span></div></div>
+      <p class="model-note">El modelo aprende de una simulación de demanda, no de ventas reales. MAE y RMSE resumen errores de test; R² compara el ajuste con predecir el promedio. La estimación requiere demanda observada hace 7 días y no es un pronóstico de varios días.</p>{% else %}<p>Las métricas no están disponibles. Ejecuta el entrenamiento para generarlas.</p>{% endif %}
+    </section>
   </main>
   <footer>EPE 3 · Teoría y Aplicaciones de la Inteligencia Artificial · NexaFlow · Demostración académica</footer>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js" defer></script>
   <script>
     const zone = document.getElementById('zona'); const zoneName = document.getElementById('zone-name'); const zoneSectors = document.getElementById('zone-sectors'); const dateInput = document.getElementById('fecha'); const dateSummary = document.getElementById('date-summary');
     function updateZone(){ const option = zone.options[zone.selectedIndex]; zoneName.textContent = option.text.replace(/^Ruta \d+ · /, ''); zoneSectors.textContent = `${option.dataset.sectores}. ${option.dataset.descripcion}`; }
     function updateDate(){ if(!dateInput.value) return; const [year, month, day] = dateInput.value.split('-').map(Number); dateSummary.textContent = new Intl.DateTimeFormat('es-CL',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date(year, month - 1, day)); }
     zone.addEventListener('change', updateZone); dateInput.addEventListener('change', updateDate); updateDate();
+    document.getElementById('prediction-form').addEventListener('submit', function () {
+      if (!this.checkValidity()) return;
+      document.getElementById('loading-status').classList.add('active');
+      document.getElementById('submit-button').disabled = true;
+      this.setAttribute('aria-busy', 'true');
+    });
+    const history = {{ history|tojson }};
+    const estimate = {{ result.prediccion_demanda|tojson if result else 'null' }};
+    const scenario = {{ fecha_humana|tojson }};
+    window.addEventListener('load', () => {
+      if (!history.length) return;
+      if (!window.Chart) {
+        const canvas = document.getElementById('history-chart');
+        canvas.hidden = true;
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 900 280');
+        svg.setAttribute('role', 'img');
+        svg.setAttribute('aria-label', 'Historial sintético de 21 días y punto del escenario estimado');
+        svg.style.width = '100%'; svg.style.height = '100%';
+        const values = history.map(row => row.demanda);
+        if (estimate !== null) values.push(estimate);
+        const low = Math.floor((Math.min(...values)-10)/10)*10;
+        const high = Math.ceil((Math.max(...values)+10)/10)*10;
+        const toY = value => 225-(value-low)/(high-low)*180;
+        const toX = index => 58+index*(790/Math.max(1,history.length-1));
+        function element(tag,attrs,text){const node=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [key,value] of Object.entries(attrs))node.setAttribute(key,value);if(text)node.textContent=text;svg.appendChild(node);return node;}
+        for(let i=0;i<=4;i++){const v=low+i*(high-low)/4,y=toY(v);element('line',{x1:58,y1:y,x2:850,y2:y,stroke:'#d6e2e6'});element('text',{x:5,y:y+5,fill:'#425d6b','font-size':14},Math.round(v).toString());}
+        element('polyline',{points:history.map((row,i)=>`${toX(i)},${toY(row.demanda)}`).join(' '),fill:'none',stroke:'#006d69','stroke-width':3});
+        history.forEach((row,i)=>element('circle',{cx:toX(i),cy:toY(row.demanda),r:3,fill:'#006d69'}));
+        if(estimate!==null){element('line',{x1:toX(history.length-1)+8,y1:toY(history.at(-1).demanda),x2:876,y2:toY(estimate),stroke:'#9b3b20','stroke-dasharray':'5 5'});element('circle',{cx:876,cy:toY(estimate),r:8,fill:'#9b3b20'});element('text',{x:792,y:toY(estimate)-13,fill:'#7d2e19','font-size':16,'font-weight':'bold'},estimate.toFixed(1));}
+        element('text',{x:58,y:260,fill:'#425d6b','font-size':14},history[0].fecha.slice(5));
+        element('text',{x:794,y:260,fill:'#425d6b','font-size':14},'Escenario');
+        canvas.parentElement.appendChild(svg);
+        return;
+      }
+      const labels = history.map(row => row.fecha.slice(5));
+      labels.push('Escenario');
+      new Chart(document.getElementById('history-chart'), {type:'line', data:{labels,datasets:[
+        {label:'Demanda observada sintética',data:[...history.map(row => row.demanda),null],borderColor:'#006d69',backgroundColor:'#006d69',tension:.2,pointRadius:2},
+        {label:'Estimación '+scenario,data:[...Array(history.length).fill(null),estimate],borderColor:'#9b3b20',backgroundColor:'#9b3b20',pointRadius:estimate===null?0:7,showLine:false}
+      ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{title:{display:true,text:'Unidades'},beginAtZero:false}}}});
+    });
   </script>
 </body>
 </html>

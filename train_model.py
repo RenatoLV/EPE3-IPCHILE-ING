@@ -75,6 +75,22 @@ def train():
         cv[name] = {'MAE_media':float(np.mean([f['MAE'] for f in folds])), 'folds':folds}
     selected = min(cv,key=lambda n:cv[n]['MAE_media'])
     model = clone(candidates[selected]).fit(dev[FEATURES],dev.demanda)
+    transformed_names = model.named_steps['columntransformer'].get_feature_names_out()
+    estimator = model.steps[-1][1]
+    if hasattr(estimator, 'coef_'):
+        effects = sorted(
+            ({'variable': str(name), 'coeficiente': float(coefficient)}
+             for name, coefficient in zip(transformed_names, estimator.coef_)),
+            key=lambda item: abs(item['coeficiente']), reverse=True,
+        )[:10]
+        effects_note = 'Coeficientes del modelo lineal; describen asociación condicional, no causalidad. Categorías one-hot y escalas distintas limitan comparaciones directas.'
+    else:
+        effects = sorted(
+            ({'variable': str(name), 'importancia': float(importance)}
+             for name, importance in zip(transformed_names, estimator.feature_importances_)),
+            key=lambda item: item['importancia'], reverse=True,
+        )[:10]
+        effects_note = 'Importancia por impureza de Random Forest; no equivale a efecto causal.'
     pred = np.maximum(0,model.predict(test[FEATURES]))
     evaluated = test.assign(prediccion=pred, error_absoluto=np.abs(test.demanda - pred),
                             tipo_dia=np.where(test.dia_semana >= 5, 'fin_de_semana', 'laboral'))
@@ -94,6 +110,7 @@ def train():
               'test_desde':str(pd.Timestamp(cutoff).date()),'cv':cv,'fold_dates':boundaries,
               'comparacion_modelos':candidates_summary,
               'seleccionado':selected,'test_metricas':scores(test.demanda,pred),
+              'efectos_modelo':effects,'interpretacion_efectos':effects_note,
               'baseline_lag7_test':scores(test.demanda,test.demanda_lag7),
               'metricas_por_zona':by_zone,
               'metricas_por_promocion':by_promotion,

@@ -1,6 +1,9 @@
 """Interfaz Flask que consume FastAPI por HTTP."""
 import os
+import csv
+import json
 from datetime import date, datetime
+from pathlib import Path
 import httpx
 from flask import Flask, render_template, request
 
@@ -16,6 +19,25 @@ DIAS = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'doming
 MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre']
 DEFAULTS = {'zona': 1, 'fecha': date.today().isoformat(), 'dia_semana': date.today().weekday(), 'mes': date.today().month, 'promocion': 1, 'demanda_lag7': 95}
 API_FEATURES = ('zona', 'dia_semana', 'mes', 'promocion', 'demanda_lag7')
+ROOT = Path(__file__).resolve().parent
+
+
+def model_context():
+    try:
+        return json.loads((ROOT/'artifacts/metricas.json').read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        return {}
+
+
+def route_history(zone):
+    try:
+        with (ROOT/'data/demanda_sintetica.csv').open(encoding='utf-8', newline='') as source:
+            rows = [row for row in csv.DictReader(source) if int(row['zona']) == zone]
+        recent = rows[-21:]
+        return [{'fecha': row['fecha'][:10], 'demanda': round(float(row['demanda']), 1)}
+                for row in recent]
+    except (OSError, ValueError, KeyError):
+        return []
 
 
 def fecha_humana(value):
@@ -24,8 +46,13 @@ def fecha_humana(value):
 
 @app.get('/health')
 def health():
-    """Estado simple de la interfaz, sin afirmar disponibilidad de la API."""
-    return {'status': 'ok', 'servicio': 'web', 'api_url': API_URL}
+    """Comprueba la API con un tiempo máximo breve para Docker Compose."""
+    try:
+        response = httpx.get(API_URL+'/health', timeout=1)
+        api_ok = response.status_code == 200 and response.json().get('status') == 'ok'
+    except (httpx.HTTPError, ValueError):
+        api_ok = False
+    return {'servicio': 'web', 'api': 'ok' if api_ok else 'caida'}, 200 if api_ok else 503
 
 @app.route('/',methods=['GET','POST'])
 def index():
@@ -52,9 +79,29 @@ def index():
         date_label = fecha_humana(str(values['fecha']))
     except (KeyError, ValueError):
         date_label = 'Fecha por definir'
+    try:
+        zone_id = int(values['zona'])
+    except (ValueError, TypeError):
+        zone_id = 1
+    zone_id = zone_id if zone_id in ZONAS else 1
+    metrics = model_context()
+    history = route_history(zone_id)
+    average = round(sum(row['demanda'] for row in history)/len(history), 1) if history else None
+    rmse = metrics.get('test_metricas', {}).get('RMSE')
+    recommendation = None
+    if result and average is not None and rmse is not None:
+        predicted = result['prediccion_demanda']
+        if predicted > average + rmse:
+            recommendation = 'Demanda sobre el promedio reciente de la ruta: revisa stock y capacidad de despacho antes de confirmar.'
+        elif predicted < average - rmse:
+            recommendation = 'Demanda bajo el promedio reciente de la ruta: revisa pedidos confirmados antes de reponer inventario.'
+        else:
+            recommendation = 'Demanda cercana al promedio reciente de la ruta: valida inventario y pedidos antes del despacho.'
     return render_template('index.html', values=values, result=result, error=error,
-                           zonas=ZONAS, zona_seleccionada=ZONAS.get(int(values['zona']), ZONAS[1]),
-                           fecha_humana=date_label), status
+                           zonas=ZONAS, zona_seleccionada=ZONAS[zone_id],
+                           fecha_humana=date_label, metrics=metrics, history=history,
+                           average=average, recommendation=recommendation,
+                           rmse=round(rmse, 1) if rmse is not None else None), status
 
 if __name__ == '__main__':
     app.run(host=os.getenv('NEXAFLOW_WEB_HOST', '127.0.0.1'), port=5000, debug=False)

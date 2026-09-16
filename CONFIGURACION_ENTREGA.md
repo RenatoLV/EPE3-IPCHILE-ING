@@ -2,7 +2,7 @@
 
 ## Estado de esta versión
 
-La aplicación funciona en local con datos sintéticos reproducibles. La sesión del 16 de septiembre de 2026 dejó evidencia en `artifacts/`: 18 pruebas aprobadas, tres escenarios HTTP correctos, una carga local de 100 solicitudes con concurrencia 10 y cero errores, y una ejecución Docker Compose con los dos servicios saludables. Estas evidencias demuestran el funcionamiento técnico local; no demuestran desempeño en la empresa.
+La aplicación funciona en local con datos sintéticos reproducibles. La sesión del 16 de septiembre de 2026 verificó 22 pruebas aprobadas, una carga local de 100 solicitudes con concurrencia 10 y cero errores, y Docker Compose con API y web en estado `healthy`. Estas evidencias demuestran funcionamiento técnico local; no desempeño empresarial.
 
 ## Antes de la demostración
 
@@ -32,17 +32,17 @@ La adaptación pendiente está en `train_model.py`: leer el CSV autorizado, vali
 
 ## Requisitos de informe y presentación
 
-- Reemplazar nombre, sección, docente, fecha y enlace real de GitHub.
+- Completar nombre, sección, docente y fecha. El repositorio indicado es `https://github.com/RenatoLV/EPE3-IPCHILE-ING`; verificar acceso del docente y que contiene el último commit.
 - Vincular NexaFlow con el diagnóstico de EPE 2 y explicar la decisión que apoya.
 - Reportar MAE, RMSE y R² porque el problema es regresión. Precision, Recall y F1 no aplican al objetivo continuo; explicarlo en el informe.
 - Incluir la tabla de métricas por zona y comentar el segmento con peor error. En esta ejecución sintética, zona 1 tiene MAE 7,13 y zona 4, 5,84.
 - Incorporar capturas propias de formulario, respuesta de `/docs`, pruebas, carga y ejemplos operativos.
-- Ejecutar el protocolo de usabilidad de `PLAN_DE_TRABAJO.md` con 3 a 5 participantes. Registrar tareas, tiempos, errores y cambios aplicados. No afirmar que se hizo si aún no se realiza.
-- Publicar el código sin secretos ni datos empresariales y verificar desde un clon limpio.
+- Ejecutar `PROTOCOLO_USABILIDAD.md` con 3 a 5 participantes. Registrar tiempos, ayuda y comentarios reales. No afirmar que se hizo si aún no se realiza.
+- Verificar desde un clon limpio; no subir secretos ni datos empresariales.
 
 ## Docker opcional
 
-Se prepararon `Dockerfile`, `docker-compose.yml` y `.dockerignore`. Los contenedores incluyen comprobaciones de salud para API y web. La ejecución se validó el 16 de septiembre de 2026: ambos servicios llegaron a `healthy`, la API respondió `200` a `/health` y `/predict`, y el formulario web mostró la predicción 152,2. La evidencia legible está en `artifacts/docker_verificacion.json`.
+Se prepararon `Dockerfile`, `docker-compose.yml` y `.dockerignore`. Los contenedores incluyen comprobaciones de salud para API y web. La ejecución se validó el 16 de septiembre de 2026: ambos servicios llegaron a `healthy`, la API respondió `200` a `/health` y `/predict`, y el formulario web mostró una predicción de 113,7 unidades para el escenario documentado. El valor cambia cuando cambian los campos de entrada.
 
 Para volver a iniciar los contenedores, usar:
 

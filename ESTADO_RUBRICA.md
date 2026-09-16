@@ -1,13 +1,13 @@
 # Estado de implementación y ruta de cierre
 
-Actualización: 15 de septiembre de 2026. Esta tabla registra evidencia, no asigna puntajes ni garantiza una calificación.
+Actualización: 16 de septiembre de 2026. Esta tabla registra evidencia, no asigna puntajes ni garantiza una calificación.
 
 | Criterio de la pauta | Implementado y comprobado | Para cerrar el criterio |
 |---|---|---|
 | 3.1 Diseño de solución, 25 puntos | Demanda diaria por zona, cinco entradas, entrenamiento temporal, separación web/API | Vincular el problema con EPE 2, justificar datos y definir criterios empresariales de aceptación |
 | 3.2 Aplicación interactiva, 25 puntos | Formulario Flask, listas, resultado, mensajes de error, captura móvil de la primera versión | Probar tareas con usuarios, documentar dificultades y verificar mejoras |
 | 4.1 Integración API, 25 puntos | FastAPI, /predict, /health y /docs; flujo HTTP web/API comprobado | Documentar ejemplos válidos e inválidos y preparar demostración del contrato |
-| 4.3 Funcionalidad y optimización, 25 puntos | Entorno virtual instalado, 16 pruebas aprobadas, arranque supervisado, carga local inicial y métricas segmentadas | Repetir análisis y carga con la versión final; justificar límites del entorno local |
+| 4.3 Funcionalidad y optimización, 25 puntos | Entorno virtual, 22 pruebas aprobadas, Docker `healthy`, arranque supervisado, carga local y métricas segmentadas | Justificar límites del entorno local y probar usabilidad con personas reales |
 
 ## Punto de partida operativo
 

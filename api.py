@@ -1,12 +1,22 @@
 """API FastAPI. Carga únicamente el pickle generado localmente por train_model.py."""
 from contextlib import asynccontextmanager
 from pathlib import Path
+from datetime import datetime, timezone
+import json
+import logging
+import sys
 import pickle
 import pandas as pd
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field, ConfigDict
 
 MODEL_PATH = Path(__file__).resolve().parent/'artifacts/modelo.pkl'
+logger = logging.getLogger('nexaflow.predicciones')
+if not logger.handlers:
+    logger.addHandler(logging.StreamHandler(sys.stdout))
+logger.setLevel(logging.INFO)
+logger.propagate = False
 
 class PredictionInput(BaseModel):
     model_config = ConfigDict(extra='forbid', allow_inf_nan=False)
@@ -24,8 +34,12 @@ async def lifespan(app):
             app.state.bundle = pickle.load(f)
     yield
 
-app = FastAPI(title='NexaFlow API',version='1.0.0',lifespan=lifespan,
+app = FastAPI(title='NexaFlow API',version='1.0.0',lifespan=lifespan, docs_url=None,
               description='Prototipo académico entrenado con datos sintéticos.')
+
+@app.get('/docs', response_class=HTMLResponse, include_in_schema=False)
+def docs():
+    return (Path(__file__).resolve().parent/'templates/api_docs.html').read_text(encoding='utf-8')
 
 @app.get('/health')
 def health():
@@ -39,4 +53,8 @@ def predict(data:PredictionInput):
     bundle = app.state.bundle
     frame = pd.DataFrame([data.model_dump()],columns=bundle['features'])
     value = max(0.,float(bundle['model'].predict(frame)[0]))
-    return {'prediccion_demanda':round(value,1),'unidad':'unidades/día','modelo':bundle['name'],'datos':'sinteticos'}
+    result = {'prediccion_demanda':round(value,1),'unidad':'unidades/día','modelo':bundle['name'],'datos':'sinteticos'}
+    logger.info(json.dumps({'timestamp_utc': datetime.now(timezone.utc).isoformat(),
+                            'evento': 'prediccion', 'entrada': data.model_dump(),
+                            'salida': result}, ensure_ascii=False))
+    return result
