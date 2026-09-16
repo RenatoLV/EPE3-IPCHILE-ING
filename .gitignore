@@ -19,3 +19,8 @@ artifacts/*
 !artifacts/carga.json
 !artifacts/docker_verificacion.json
 !artifacts/verificacion_operativa.json
+!artifacts/*.png
+!artifacts/ejemplo_api.json
+!artifacts/ejemplos_operativos.json
+!artifacts/carga_actual.txt
+!artifacts/entrenamiento_actual.txt

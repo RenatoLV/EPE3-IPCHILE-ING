@@ -105,6 +105,10 @@ La cifra muestra ± RMSE de test como referencia de error típico aproximado. **
 
 Los tres archivos están versionados en GitHub junto al código. Antes de la entrega académica, completa los datos de portada, confirma la continuidad con EPE 2 y agrega resultados de usabilidad obtenidos con personas reales; consulta [CHECKLIST_ENTREGA_FINAL.md](CHECKLIST_ENTREGA_FINAL.md).
 
+La [pauta original de la actividad](documentacion/P_ACTIVIDAD_2024_VF.pdf) también está en el repositorio. Las capturas de la web, de `/docs`, del caso de error y de la vista móvil, junto con el ejemplo JSON de API, están en [artifacts/](artifacts/). Las capturas son evidencia de la ejecución del 16 de septiembre de 2026; el informe y la presentación las incorporan.
+
+Los [scripts auxiliares de los entregables](fuentes_entregables/) también se conservaron para continuar la documentación en otro equipo. Los archivos editables Word y PowerPoint son suficientes para revisarlos sin esos scripts.
+
 ## GitHub y entrega
 
 Repositorio: https://github.com/RenatoLV/EPE3-IPCHILE-ING. Para seguir trabajando desde otro equipo:
@@ -117,6 +121,8 @@ docker compose ps
 ```
 
 El contenedor se reconstruye desde el Dockerfile y los archivos del repositorio. Iniciar sesión en Docker Desktop no traslada automáticamente los contenedores del otro equipo. Antes de entregar, confirma acceso del docente al enlace, completa los datos personales y aplica las pruebas de usabilidad; los resultados de estas pruebas deben ser reales.
+
+No hay que copiar `.venv`, `build`, `logs`, cachés ni la imagen local de Docker: se regeneran en el otro equipo. Para seguir trabajando, ejecuta `git pull` antes de editar y, al terminar, `git add .`, `git commit -m "Describe el cambio"` y `git push`. Verifica que el nuevo commit aparezca en GitHub. Si vas a modificar el informe o la presentación, edita los archivos de `entregables/` y súbelos junto al código.
 
 ## Docker
 
