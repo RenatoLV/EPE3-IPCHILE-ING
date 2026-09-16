@@ -1,0 +1,18 @@
+{
+  "estado": "ok",
+  "request": {
+    "zona": 1,
+    "dia_semana": 5,
+    "mes": 12,
+    "promocion": 1,
+    "demanda_lag7": 95.0
+  },
+  "response": {
+    "prediccion_demanda": 127.8,
+    "unidad": "unidades/día",
+    "modelo": "Lineal",
+    "datos": "sinteticos"
+  },
+  "verificacion": "POST HTTP real a API y formulario Flask; resultado coincidente",
+  "fecha_local": "2026-09-16T17:02:22-0300"
+}

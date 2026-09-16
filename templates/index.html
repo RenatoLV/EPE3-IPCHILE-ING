@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NexaFlow | Planificación de demanda</title>
+  <style>
+    :root{--ink:#15364b;--navy:#0d3045;--teal:#007c78;--teal-soft:#e5f4f2;--paper:#fff;--canvas:#f3f7f8;--muted:#557080;--line:#d8e3e7;--alert:#9b3b20}*{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--ink);font-family:Calibri,Arial,sans-serif;font-size:17px;line-height:1.5}.topbar{background:var(--navy);color:#fff;padding:17px max(5vw,28px);display:flex;justify-content:space-between;align-items:center;gap:20px}.brand{font-size:27px;font-weight:700}.brand small{display:block;color:#b9d8df;font-size:13px;font-weight:400}.tag{border:1px solid #5c8798;border-radius:99px;padding:6px 13px;font-size:13px;white-space:nowrap}main{max-width:1190px;margin:auto;padding:44px 28px 54px}.eyebrow{color:var(--teal);font-size:14px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin:0 0 8px}h1{font-size:43px;line-height:1.08;max-width:760px;letter-spacing:-1px;margin:0 0 14px}.lead{font-size:20px;color:var(--muted);max-width:800px;margin:0}.purpose{margin-top:27px;background:var(--teal-soft);border-left:5px solid var(--teal);padding:16px 20px;max-width:950px}.purpose strong{display:block;margin-bottom:3px}.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:36px 0 27px}.step{background:var(--paper);border:1px solid var(--line);padding:18px 19px;min-height:132px;border-radius:11px}.step-num{color:var(--teal);font-weight:700;font-size:14px}.step h2{font-size:20px;margin:7px 0 4px}.step p{font-size:15px;color:var(--muted);margin:0}.workspace{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(310px,.9fr);gap:26px;align-items:start}.panel{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:29px;box-shadow:0 3px 9px #1733450a}.panel h2{font-size:25px;margin:0 0 4px}.panel-head{color:var(--muted);font-size:15px;margin:0 0 22px}label{display:block;font-size:15px;font-weight:700;margin:19px 0 7px}.help{font-weight:400;color:var(--muted);font-size:13px;display:block;margin-top:2px}input,select,button{font:inherit}input,select{background:#fff;border:1px solid #a9bdc5;border-radius:7px;color:var(--ink);width:100%;padding:12px 13px}input:focus,select:focus,button:focus{outline:3px solid #f6d27e;outline-offset:2px}.zone-note{background:#f6fafb;border:1px solid var(--line);border-radius:8px;padding:13px 15px;margin-top:10px;font-size:14px}.zone-note strong{display:block}.zone-note span{color:var(--muted)}.date-summary{font-size:14px;color:var(--teal);font-weight:700;margin:6px 0 0}.switch{display:grid;grid-template-columns:1fr 1fr;border:1px solid #a9bdc5;border-radius:7px;overflow:hidden}.switch label{cursor:pointer;font-weight:400;margin:0;padding:12px;text-align:center;border-right:1px solid #a9bdc5}.switch label:last-child{border:0}.switch input{accent-color:var(--teal);width:auto;margin-right:7px}.button{margin-top:26px;width:100%;background:var(--teal);color:#fff;border:0;border-radius:7px;padding:14px;font-weight:700;cursor:pointer}.button:hover{background:#006966}.output{border-top:5px solid var(--teal)}.status{display:inline-block;background:#eaf6ed;color:#26623d;padding:4px 10px;border-radius:99px;font-size:13px;font-weight:700;margin:15px 0}.status.initial{background:#eff3f5;color:var(--muted)}.result-value{font-size:58px;line-height:1;color:var(--teal);font-weight:700;letter-spacing:-2px;margin:12px 0 4px}.result-unit{font-size:17px;margin:0 0 25px}.decision{background:#fff8e8;border:1px solid #f4d787;border-radius:8px;padding:15px}.decision h3{font-size:16px;margin:0 0 5px}.decision p{font-size:15px;margin:0;color:#5d4b23}.context-list{padding:0;margin:22px 0;list-style:none}.context-list li{padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}.context-list b{display:block}.context-list span{color:var(--muted)}.alert{background:#fff0eb;border-radius:8px;color:var(--alert);padding:14px}footer{max-width:1190px;margin:auto;padding:0 28px 32px;color:var(--muted);font-size:13px}@media(max-width:780px){main{padding:30px 18px}.topbar{padding:15px 18px}.tag{display:none}h1{font-size:35px}.flow,.workspace{grid-template-columns:1fr}.panel{padding:23px}.flow{gap:11px}.step{min-height:auto}}
+  </style>
+</head>
+<body>
+  <header class="topbar"><div class="brand">NexaFlow <small>Planificación de demanda por rutas</small></div><div class="tag">Prototipo académico · Coquimbo</div></header>
+  <main>
+    <p class="eyebrow">Caso práctico de Machine Learning</p>
+    <h1>Planifica la reposición antes de que salga la ruta</h1>
+    <p class="lead">NexaFlow estima unidades diarias para que la persona encargada de logística revise el inventario sugerido de cada ruta antes de planificar el despacho.</p>
+    <div class="purpose"><strong>¿Qué aporta el modelo?</strong>Reconoce patrones de zona, fecha, promociones y comportamiento de la semana anterior para entregar una estimación. El resultado orienta la revisión humana; no genera pedidos automáticos.</div>
+    <section class="flow" aria-label="Cómo funciona la estimación">
+      <article class="step"><div class="step-num">01 · CONTEXTO OPERATIVO</div><h2>Selecciona la ruta</h2><p>Elige una zona referencial de reparto de Coquimbo y la fecha que se desea planificar.</p></article>
+      <article class="step"><div class="step-num">02 · DATOS DISPONIBLES</div><h2>Agrega la demanda previa</h2><p>Indica la demanda observada de esa ruta hace siete días y si habrá promoción.</p></article>
+      <article class="step"><div class="step-num">03 · APOYO A DECISIÓN</div><h2>Revisa la estimación</h2><p>Compara las unidades estimadas con stock, pedidos pendientes y capacidad de despacho.</p></article>
+    </section>
+    <div class="workspace">
+      <form class="panel" method="post">
+        <h2>Preparar una estimación</h2><p class="panel-head">Completa los datos que se conocen antes de organizar la ruta.</p>
+        <label for="zona">Ruta de reparto referencial</label>
+        <select id="zona" name="zona" aria-describedby="zona-ayuda">
+          {% for id, zona in zonas.items() %}<option value="{{ id }}" data-sectores="{{ zona.sectores }}" data-descripcion="{{ zona.descripcion }}" {% if values.zona|string == id|string %}selected{% endif %}>Ruta {{ id }} · {{ zona.nombre }}</option>{% endfor %}
+        </select>
+        <div class="zone-note" id="zona-ayuda"><strong id="zone-name">{{ zona_seleccionada.nombre }}</strong><span id="zone-sectors">{{ zona_seleccionada.sectores }}. {{ zona_seleccionada.descripcion }}</span></div>
+        <label for="fecha">Fecha que se desea planificar <span class="help">El calendario calcula automáticamente el día de semana y el mes.</span></label>
+        <input id="fecha" name="fecha" type="date" value="{{ values.fecha }}" required>
+        <p class="date-summary" id="date-summary">{{ fecha_humana }}</p>
+        <label>¿Habrá promoción activa?</label>
+        <div class="switch"><label><input type="radio" name="promocion" value="0" {% if values.promocion|string == '0' %}checked{% endif %}>No</label><label><input type="radio" name="promocion" value="1" {% if values.promocion|string != '0' %}checked{% endif %}>Sí</label></div>
+        <label for="demanda_lag7">Demanda observada hace 7 días <span class="help">Usa las unidades reales de la misma ruta, para el mismo día de la semana anterior.</span></label>
+        <input id="demanda_lag7" name="demanda_lag7" type="number" min="0" max="100000" step="0.1" value="{{ values.demanda_lag7 }}" required>
+        <button class="button" type="submit">Estimar demanda de la ruta</button>
+      </form>
+      <aside class="panel output" aria-live="polite">
+        <h2>Resultado para la ruta</h2>
+        {% if error %}<p class="alert" role="alert">{{ error }}</p>
+        {% elif result %}<span class="status">Estimación calculada</span><p class="result-value">{{ result.prediccion_demanda }}</p><p class="result-unit">unidades estimadas para {{ fecha_humana|lower }}</p><div class="decision"><h3>Siguiente revisión recomendada</h3><p>Contrasta esta cantidad con el inventario disponible, pedidos confirmados y capacidad de la ruta antes de tomar una decisión.</p></div>
+        {% else %}<span class="status initial">Pendiente de cálculo</span><p class="result-unit">Completa el formulario para obtener la cantidad estimada de unidades.</p>{% endif %}
+        <ul class="context-list"><li><b>Ruta seleccionada</b><span>{{ zona_seleccionada.nombre }}</span></li><li><b>Sector referencial</b><span>{{ zona_seleccionada.sectores }}</span></li><li><b>Uso responsable</b><span>La predicción apoya una decisión humana y debe validarse con registros reales.</span></li></ul>
+        <div class="decision"><h3>Sobre este ejemplo</h3><p>Las rutas son referenciales para contextualizar Coquimbo. El modelo fue entrenado con datos sintéticos y no representa la demanda real de los sectores nombrados.</p></div>
+      </aside>
+    </div>
+  </main>
+  <footer>EPE 3 · Teoría y Aplicaciones de la Inteligencia Artificial · NexaFlow · Demostración académica</footer>
+  <script>
+    const zone = document.getElementById('zona'); const zoneName = document.getElementById('zone-name'); const zoneSectors = document.getElementById('zone-sectors'); const dateInput = document.getElementById('fecha'); const dateSummary = document.getElementById('date-summary');
+    function updateZone(){ const option = zone.options[zone.selectedIndex]; zoneName.textContent = option.text.replace(/^Ruta \d+ · /, ''); zoneSectors.textContent = `${option.dataset.sectores}. ${option.dataset.descripcion}`; }
+    function updateDate(){ if(!dateInput.value) return; const [year, month, day] = dateInput.value.split('-').map(Number); dateSummary.textContent = new Intl.DateTimeFormat('es-CL',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date(year, month - 1, day)); }
+    zone.addEventListener('change', updateZone); dateInput.addEventListener('change', updateDate); updateDate();
+  </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+services:
+  api:
+    build: .
+    image: nexaflow-epe3:local
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+  web:
+    image: nexaflow-epe3:local
+    command: python app.py
+    environment:
+      NEXAFLOW_API_URL: http://api:8000
+      NEXAFLOW_WEB_HOST: 0.0.0.0
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s

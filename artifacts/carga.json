@@ -1,0 +1,23 @@
+{
+  "fecha_utc": "2026-09-16T20:02:35.417264+00:00",
+  "entorno": "Windows-11-10.0.26200-SP0",
+  "alcance": "Medición local breve. No certifica capacidad de producción ni usabilidad humana.",
+  "api": {
+    "url": "http://127.0.0.1:8000/predict",
+    "solicitudes": 100,
+    "concurrencia": 10,
+    "errores": 0,
+    "p50_ms": 34.70664999622386,
+    "p95_ms": 41.93728499667486,
+    "solicitudes_segundo": 278.27542699789626
+  },
+  "web": {
+    "url": "http://127.0.0.1:5000/",
+    "solicitudes": 100,
+    "concurrencia": 10,
+    "errores": 0,
+    "p50_ms": 62.60959999781335,
+    "p95_ms": 85.50833500412409,
+    "solicitudes_segundo": 159.1144327126505
+  }
+}

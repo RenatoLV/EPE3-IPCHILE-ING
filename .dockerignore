@@ -1,0 +1,13 @@
+.git
+.venv
+.deps
+__pycache__
+.pytest_cache
+build
+logs
+entregables
+.chart-data-*
+*.log
+*.zip
+data
+artifacts

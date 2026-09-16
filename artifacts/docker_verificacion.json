@@ -1,0 +1,20 @@
+{
+  "entorno": "Docker Compose local",
+  "fecha": "2026-09-16T17:13:55.6923479-03:00",
+  "api_prediction": {
+    "prediccion_demanda": 152.2,
+    "unidad": "unidades/día",
+    "modelo": "Lineal",
+    "datos": "sinteticos"
+  },
+  "api_health": {
+    "status": "ok",
+    "modelo": "Lineal",
+    "datos": "sinteticos"
+  },
+  "web_health": {
+    "api_url": "http://api:8000",
+    "servicio": "web",
+    "status": "ok"
+  }
+}

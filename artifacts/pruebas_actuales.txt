@@ -1,0 +1,16 @@
+.................                                                        [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\U-1133\Documents\ChatGPT\EPE 3 IA\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv\Lib\site-packages\starlette\testclient.py:53
+  C:\Users\U-1133\Documents\ChatGPT\EPE 3 IA\.venv\Lib\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+.venv\Lib\site-packages\_pytest\cacheprovider.py:469
+  C:\Users\U-1133\Documents\ChatGPT\EPE 3 IA\.venv\Lib\site-packages\_pytest\cacheprovider.py:469: PytestCacheWarning: could not create cache path C:\Users\U-1133\Documents\ChatGPT\EPE 3 IA\.pytest_cache\v\cache\nodeids: [WinError 5] Acceso denegado: 'C:\\Users\\U-1133\\Documents\\ChatGPT\\EPE 3 IA\\.pytest_cache\\v\\cache'
+    config.cache.set("cache/nodeids", sorted(self.cached_nodeids))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+17 passed, 3 warnings in 2.61s
